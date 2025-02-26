@@ -4,6 +4,7 @@ import Head from 'next/head';
 
 export default function Home() {
     const [scrollY, setScrollY] = useState(0);
+    const [menuOpen, setMenuOpen] = useState(false);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -23,27 +24,12 @@ export default function Home() {
                         100% { background-position: 0% 50%; }
                     }
 
-                    @keyframes floating {
-                        0% { transform: translateY(0px); opacity: 0.8; }
-                        50% { transform: translateY(-15px); opacity: 1; }
-                        100% { transform: translateY(0px); opacity: 0.8; }
-                    }
-
                     body {
                         background: linear-gradient(270deg, #0a0a0a, #1a1a1a, #2a2a2a);
                         background-size: 400% 400%;
                         animation: backgroundShift 10s ease infinite;
                         overflow-x: hidden;
-                    }
-
-                    .floating-particle {
-                        position: absolute;
-                        width: 10px;
-                        height: 10px;
-                        background: white;
-                        border-radius: 50%;
-                        opacity: 0.5;
-                        animation: floating 4s infinite ease-in-out;
+                        margin: 0;
                     }
                 `}</style>
             </Head>
@@ -54,29 +40,26 @@ export default function Home() {
                 <div style={navLinks}>
                     <Link href="/"><a style={navLink}>Home</a></Link>
                     <Link href="/about"><a style={navLink}>About</a></Link>
+                    <div style={dropdownContainer}>
+                        <span style={navLink}>Tools ▼</span>
+                        <div style={dropdownMenu}>
+                            <Link href="/number-generator"><a style={dropdownItem}>🎲 Number Generator</a></Link>
+                            <Link href="/timer"><a style={dropdownItem}>⏳ Countdown Timer</a></Link>
+                            <Link href="/pdf-splitter"><a style={dropdownItem}>📄 PDF Splitter</a></Link>
+                            <Link href="/recipe-generator"><a style={dropdownItem}>🍲 Recipe Generator</a></Link>
+                            <Link href="/image-compressor"><a style={dropdownItem}>🖼️ Image Compressor</a></Link>
+                        </div>
+                    </div>
                     <Link href="/contact"><a style={navLink}>Contact</a></Link>
                 </div>
             </nav>
 
-            {/* ✨ Parallax Hero Section */}
+            {/* ✨ Hero Section */}
             <header style={{ ...heroStyle, transform: `translateY(${scrollY * 0.3}px)` }}>
                 <h1 style={heroTitle}>Powerful Tools, All in One Place</h1>
                 <p style={heroSubtitle}>Explore a world of utilities designed to simplify your tasks.</p>
                 <Link href="/tools"><a style={heroButton}>Explore Tools 🔍</a></Link>
             </header>
-
-            {/* ✨ Floating Particles */}
-            {Array.from({ length: 15 }).map((_, i) => (
-                <div
-                    key={i}
-                    className="floating-particle"
-                    style={{
-                        left: `${Math.random() * 100}vw`,
-                        top: `${Math.random() * 100}vh`,
-                        animationDuration: `${Math.random() * 5 + 3}s`
-                    }}
-                />
-            ))}
 
             {/* 🛠️ Tool Grid Section */}
             <section style={toolsGrid}>
@@ -119,6 +102,7 @@ const logoStyle = {
     fontSize: '24px',
     fontWeight: 'bold',
     letterSpacing: '1px',
+    whiteSpace: 'nowrap',
 };
 
 const navLinks = {
@@ -131,8 +115,42 @@ const navLink = {
     textDecoration: 'none',
     fontSize: '18px',
     transition: 'color 0.3s ease',
+    whiteSpace: 'nowrap',
 };
 
+const dropdownContainer = {
+    position: 'relative',
+    display: 'inline-block',
+};
+
+const dropdownMenu = {
+    display: 'none',
+    position: 'absolute',
+    backgroundColor: 'rgba(0, 0, 0, 0.9)',
+    boxShadow: '0px 4px 8px rgba(0,0,0,0.3)',
+    borderRadius: '8px',
+    padding: '10px',
+    flexDirection: 'column',
+    minWidth: '180px',
+};
+
+dropdownContainer[":hover"] = {
+    dropdownMenu: { display: 'block' },
+};
+
+const dropdownItem = {
+    color: 'white',
+    textDecoration: 'none',
+    padding: '10px',
+    display: 'block',
+    transition: 'background 0.3s ease',
+};
+
+dropdownItem[":hover"] = {
+    backgroundColor: '#007bff',
+};
+
+/* 🎆 Hero Section */
 const heroStyle = {
     textAlign: 'center',
     padding: '150px 20px 80px',
@@ -201,4 +219,3 @@ const tools = [
     { name: "🍲 Custom Recipe Generator", link: "/recipe-generator", icon: "🍲", description: "Create custom recipes based on ingredients." },
     { name: "🖼️ Image Compressor", link: "/image-compressor", icon: "🖼️", description: "Reduce image size without losing quality." },
 ];
-
