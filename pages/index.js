@@ -1,22 +1,29 @@
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
 export default function Home() {
+    const [hovered, setHovered] = useState(null);
+
+    useEffect(() => {
+        document.body.style.margin = '0';
+        document.body.style.fontFamily = 'Arial, sans-serif';
+    }, []);
+
     return (
         <div style={{
             textAlign: 'center',
-            padding: '50px',
-            fontFamily: 'Arial, sans-serif',
-            backgroundColor: '#f5f5f5',
             minHeight: '100vh',
             display: 'flex',
             flexDirection: 'column',
+            alignItems: 'center',
             justifyContent: 'center',
-            alignItems: 'center'
+            background: 'linear-gradient(135deg, #FFDEE9 0%, #B5FFFC 100%)',
+            padding: '50px'
         }}>
             <header style={{
                 width: '100%',
-                padding: '20px',
-                backgroundColor: '#fff',
+                padding: '20px 0',
+                background: 'rgba(255, 255, 255, 0.8)',
                 boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',
                 position: 'fixed',
                 top: 0,
@@ -24,79 +31,62 @@ export default function Home() {
                 zIndex: 1000,
                 textAlign: 'center'
             }}>
-                <h1 style={{ fontSize: '2.5rem', color: '#333', margin: 0 }}>The Tool Wizard</h1>
+                <h1 style={{ fontSize: '3rem', color: '#333', margin: 0, fontWeight: 'bold' }}>The Tool Wizard</h1>
             </header>
             
-            <main style={{ marginTop: '100px', maxWidth: '900px', textAlign: 'center' }}>
-                <p style={{ fontSize: '1.2rem', color: '#666', marginBottom: '30px' }}>
-                    Explore a collection of simple yet powerful tools to make your life easier.
+            <main style={{ marginTop: '120px', maxWidth: '900px', textAlign: 'center' }}>
+                <p style={{ fontSize: '1.4rem', color: '#555', marginBottom: '40px' }}>
+                    Discover powerful tools designed to make your life easier.
                 </p>
                 
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '20px', maxWidth: '800px' }}>
-                    <Link href="/number-generator">
-                        <a style={{
-                            textDecoration: 'none',
-                            backgroundColor: '#007bff',
-                            color: 'white',
-                            padding: '20px',
-                            borderRadius: '8px',
-                            fontSize: '1.2rem',
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            height: '120px',
-                            boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-                            transition: 'transform 0.2s'
-                        }}
-                        onMouseOver={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
-                        onMouseOut={(e) => e.currentTarget.style.transform = 'scale(1)'}>
-                            🎲 Random Number Generator
-                        </a>
-                    </Link>
-                    
-                    <Link href="/timer">
-                        <a style={{
-                            textDecoration: 'none',
-                            backgroundColor: '#28a745',
-                            color: 'white',
-                            padding: '20px',
-                            borderRadius: '8px',
-                            fontSize: '1.2rem',
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            height: '120px',
-                            boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-                            transition: 'transform 0.2s'
-                        }}
-                        onMouseOver={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
-                        onMouseOut={(e) => e.currentTarget.style.transform = 'scale(1)'}>
-                            ⏳ Countdown Timer
-                        </a>
-                    </Link>
-                    
-                    <Link href="/pdf-splitter">
-                        <a style={{
-                            textDecoration: 'none',
-                            backgroundColor: '#dc3545',
-                            color: 'white',
-                            padding: '20px',
-                            borderRadius: '8px',
-                            fontSize: '1.2rem',
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            height: '120px',
-                            boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-                            transition: 'transform 0.2s'
-                        }}
-                        onMouseOver={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
-                        onMouseOut={(e) => e.currentTarget.style.transform = 'scale(1)'}>
-                            📄 PDF Splitter
-                        </a>
-                    </Link>
+                <div style={{
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
+                    gap: '20px',
+                    maxWidth: '800px'
+                }}>
+                    {[
+                        { href: '/number-generator', text: '🎲 Random Number Generator', color: '#007bff' },
+                        { href: '/timer', text: '⏳ Countdown Timer', color: '#28a745' },
+                        { href: '/pdf-splitter', text: '📄 PDF Splitter', color: '#dc3545' }
+                    ].map((tool, index) => (
+                        <Link key={index} href={tool.href}>
+                            <a 
+                                onMouseEnter={() => setHovered(index)}
+                                onMouseLeave={() => setHovered(null)}
+                                style={{
+                                    textDecoration: 'none',
+                                    backgroundColor: tool.color,
+                                    color: 'white',
+                                    padding: '20px',
+                                    borderRadius: '12px',
+                                    fontSize: '1.2rem',
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    height: '140px',
+                                    boxShadow: hovered === index ? '0 6px 12px rgba(0, 0, 0, 0.2)' : '0 4px 6px rgba(0, 0, 0, 0.1)',
+                                    transform: hovered === index ? 'scale(1.05)' : 'scale(1)',
+                                    transition: 'all 0.3s ease-in-out'
+                                }}
+                            >
+                                {tool.text}
+                            </a>
+                        </Link>
+                    ))}
                 </div>
             </main>
+            
+            <footer style={{
+                marginTop: '50px',
+                padding: '20px',
+                background: 'rgba(255, 255, 255, 0.8)',
+                boxShadow: '0px -4px 8px rgba(0, 0, 0, 0.1)',
+                width: '100%',
+                textAlign: 'center'
+            }}>
+                <p style={{ fontSize: '1rem', color: '#666' }}>© 2025 The Tool Wizard. All rights reserved.</p>
+            </footer>
         </div>
     );
 }
