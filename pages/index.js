@@ -1,8 +1,53 @@
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import Head from 'next/head';
 
 export default function Home() {
+    const [scrollY, setScrollY] = useState(0);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            setScrollY(window.scrollY);
+        };
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
+
     return (
         <div style={pageContainer}>
+            <Head>
+                <style>{`
+                    @keyframes backgroundShift {
+                        0% { background-position: 0% 50%; }
+                        50% { background-position: 100% 50%; }
+                        100% { background-position: 0% 50%; }
+                    }
+
+                    @keyframes floating {
+                        0% { transform: translateY(0px); opacity: 0.8; }
+                        50% { transform: translateY(-15px); opacity: 1; }
+                        100% { transform: translateY(0px); opacity: 0.8; }
+                    }
+
+                    body {
+                        background: linear-gradient(270deg, #0a0a0a, #1a1a1a, #2a2a2a);
+                        background-size: 400% 400%;
+                        animation: backgroundShift 10s ease infinite;
+                        overflow-x: hidden;
+                    }
+
+                    .floating-particle {
+                        position: absolute;
+                        width: 10px;
+                        height: 10px;
+                        background: white;
+                        border-radius: 50%;
+                        opacity: 0.5;
+                        animation: floating 4s infinite ease-in-out;
+                    }
+                `}</style>
+            </Head>
+
             {/* 🏆 Navigation Bar */}
             <nav style={navbarStyle}>
                 <div style={logoStyle}>🧙‍♂️ The Tool Wizard</div>
@@ -13,12 +58,25 @@ export default function Home() {
                 </div>
             </nav>
 
-            {/* ✨ Hero Section */}
-            <header style={heroStyle}>
+            {/* ✨ Parallax Hero Section */}
+            <header style={{ ...heroStyle, transform: `translateY(${scrollY * 0.3}px)` }}>
                 <h1 style={heroTitle}>Powerful Tools, All in One Place</h1>
                 <p style={heroSubtitle}>Explore a world of utilities designed to simplify your tasks.</p>
                 <Link href="/tools"><a style={heroButton}>Explore Tools 🔍</a></Link>
             </header>
+
+            {/* ✨ Floating Particles */}
+            {Array.from({ length: 15 }).map((_, i) => (
+                <div
+                    key={i}
+                    className="floating-particle"
+                    style={{
+                        left: `${Math.random() * 100}vw`,
+                        top: `${Math.random() * 100}vh`,
+                        animationDuration: `${Math.random() * 5 + 3}s`
+                    }}
+                />
+            ))}
 
             {/* 🛠️ Tool Grid Section */}
             <section style={toolsGrid}>
@@ -39,9 +97,9 @@ export default function Home() {
 /* 🎨 Styles */
 const pageContainer = {
     fontFamily: '"Comic Sans MS", cursive, sans-serif',
-    background: 'linear-gradient(135deg, #0a0a0a, #1a1a1a)',
     color: 'white',
     minHeight: '100vh',
+    overflowX: 'hidden',
 };
 
 /* 🔝 Navigation Bar */
@@ -75,11 +133,6 @@ const navLink = {
     transition: 'color 0.3s ease',
 };
 
-navLink[":hover"] = {
-    color: '#ffcc00',
-};
-
-/* 🎆 Hero Section */
 const heroStyle = {
     textAlign: 'center',
     padding: '150px 20px 80px',
@@ -109,21 +162,13 @@ const heroButton = {
     transition: 'transform 0.2s ease-in-out',
 };
 
-heroButton[":hover"] = {
-    transform: 'scale(1.05)',
-};
-
-/* 🛠️ Tool Grid */
 const toolsGrid = {
     display: 'grid',
     gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
     gap: '20px',
     padding: '50px 30px',
-    justifyContent: 'center',
-    alignItems: 'center',
 };
 
-/* 🔧 Tool Card */
 const toolCard = {
     backgroundColor: '#1a1a1a',
     padding: '20px',
@@ -134,12 +179,6 @@ const toolCard = {
     transition: 'transform 0.3s ease, box-shadow 0.3s ease',
 };
 
-toolCard[":hover"] = {
-    transform: 'scale(1.05)',
-    boxShadow: '0px 0px 20px rgba(255, 255, 255, 0.2)',
-};
-
-/* 🛠️ Individual Tool Styles */
 const toolIcon = {
     fontSize: '3rem',
     marginBottom: '10px',
@@ -155,7 +194,6 @@ const toolDescription = {
     color: '#bbb',
 };
 
-/* 🛠️ Tools List */
 const tools = [
     { name: "🎲 Random Number Generator", link: "/number-generator", icon: "🎰", description: "Generate a magic number within a custom range." },
     { name: "⏳ Countdown Timer", link: "/timer", icon: "⏳", description: "Set a countdown timer for any task." },
