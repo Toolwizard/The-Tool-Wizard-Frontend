@@ -12,20 +12,42 @@ export default function NumberGenerator() {
     };
 
     return (
-        <div style={{ textAlign: 'center', padding: '50px', fontFamily: 'Arial, sans-serif' }}>
+        <div style={{ textAlign: 'center', padding: '50px', fontFamily: 'Comic Sans MS, cursive' }}>
             <h1>🎲 Random Number Generator</h1>
             <p>Enter a range and generate a random number.</p>
 
             <div style={{ marginBottom: '20px' }}>
                 <input type="number" value={min} onChange={e => setMin(Number(e.target.value))} placeholder="Min" />
                 <input type="number" value={max} onChange={e => setMax(Number(e.target.value))} placeholder="Max" />
-                <button onClick={generateNumber}>Generate</button>
+                <button style={buttonStyle} onClick={generateNumber}>✨ Generate a Magic Number ✨</button>
             </div>
 
             {randomNumber !== null && <h2>🎉 Your Number: {randomNumber}</h2>}
 
             <br />
-            <Link href="/"><a style={{ color: 'blue', textDecoration: 'underline' }}>🔙 Back to Home</a></Link>
+            <Link href="/"><a style={backButtonStyle}>🏠 Go Back Home</a></Link>
         </div>
     );
 }
+
+const buttonStyle = {
+    fontSize: '20px',
+    fontFamily: 'Comic Sans MS, cursive',
+    backgroundColor: '#007bff',
+    color: 'white',
+    padding: '15px 30px',
+    margin: '10px',
+    borderRadius: '10px',
+    border: 'none',
+    cursor: 'pointer',
+    display: 'inline-block'
+};
+
+const backButtonStyle = {
+    fontSize: '20px',
+    fontFamily: 'Comic Sans MS, cursive',
+    color: '#007bff',
+    textDecoration: 'none',
+    padding: '10px 15px',
+    display: 'inline-block',
+};
