@@ -22,16 +22,42 @@ export default function Home() {
         }}>
             <header style={{
                 width: '100%',
-                padding: '20px 0',
+                padding: '20px',
                 background: 'rgba(255, 255, 255, 0.8)',
                 boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',
                 position: 'fixed',
                 top: 0,
                 left: 0,
                 zIndex: 1000,
-                textAlign: 'center'
+                display: 'flex',
+                alignItems: 'center',
+                paddingLeft: '20px'
             }}>
-                <h1 style={{ fontSize: '3rem', color: '#333', margin: 0, fontWeight: 'bold' }}>The Tool Wizard</h1>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                    <div style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        fontSize: '1.8rem',
+                        fontWeight: 'bold',
+                        lineHeight: '1.2',
+                        color: '#333'
+                    }}>
+                        <span>The</span>
+                        <span>Tool</span>
+                        <span>Wizard</span>
+                    </div>
+                    <div style={{
+                        width: '50px',
+                        height: '50px',
+                        background: 'radial-gradient(circle, #764ba2, #667eea)',
+                        borderRadius: '50%',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center'
+                    }}>
+                        🧙‍♂️
+                    </div>
+                </div>
             </header>
             
             <main style={{ marginTop: '120px', maxWidth: '900px', textAlign: 'center' }}>
