@@ -6,7 +6,7 @@ export default function Home() {
 
     useEffect(() => {
         document.body.style.margin = '0';
-        document.body.style.fontFamily = 'Arial, sans-serif';
+        document.body.style.fontFamily = '"Comic Sans MS", "Chalkboard SE", "Comic Neue", sans-serif';
     }, []);
 
     return (
@@ -33,34 +33,36 @@ export default function Home() {
                 alignItems: 'center',
                 paddingLeft: '20px'
             }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
                     <div style={{
                         display: 'flex',
                         flexDirection: 'column',
-                        fontSize: '1.8rem',
+                        fontSize: '2.5rem',
                         fontWeight: 'bold',
                         lineHeight: '1.2',
-                        color: '#333'
+                        color: '#333',
+                        fontFamily: '"Comic Sans MS", "Chalkboard SE", "Comic Neue", sans-serif'
                     }}>
                         <span>The</span>
                         <span>Tool</span>
-                        <span>Wizard</span>
+                        <span>W<span style={{ color: '#ffcc00', textShadow: '0 0 5px #ff9900' }}>🪄</span>zard</span>
                     </div>
                     <div style={{
-                        width: '50px',
-                        height: '50px',
+                        width: '80px',
+                        height: '80px',
                         background: 'radial-gradient(circle, #764ba2, #667eea)',
                         borderRadius: '50%',
                         display: 'flex',
                         alignItems: 'center',
-                        justifyContent: 'center'
+                        justifyContent: 'center',
+                        fontSize: '2.5rem'
                     }}>
                         🧙‍♂️
                     </div>
                 </div>
             </header>
             
-            <main style={{ marginTop: '120px', maxWidth: '900px', textAlign: 'center' }}>
+            <main style={{ marginTop: '150px', maxWidth: '900px', textAlign: 'center' }}>
                 <p style={{ fontSize: '1.4rem', color: '#555', marginBottom: '40px' }}>
                     Discover powerful tools designed to make your life easier.
                 </p>
